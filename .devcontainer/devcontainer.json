@@ -1,0 +1,33 @@
+{
+    "name": "TF-M Dev Container",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workdir/workspace,type=bind",
+    "workspaceFolder": "/workdir",
+    "onCreateCommand": "bash workspace/scripts/setup.sh",
+    "mounts": [
+        "source=${localWorkspaceFolder}/.vscode/,target=/workdir/.vscode,type=bind,consistency=cached"
+    ],
+    "runArgs": [
+        "--privileged",
+        "--device=/dev/bus/usb:/dev/bus/usb"
+    ],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.renderWhitespace": "all",
+                "editor.rulers": [100]
+            },
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "Arm.vscode-cmsis-debugger"
+            ]
+        }
+    },
+    "remoteUser": "root"
+}

@@ -1,0 +1,8 @@
+
+#Applications directory to be ignored
+app/*
+!app/README.md
+
+#Ignore devcontainer resources
+.devcontainer/resources/*
+!.devcontainer/resources/README.md

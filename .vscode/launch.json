@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach TF-M Regression",
+      "type": "cmsis-debug",
+      "request": "attach",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/workspace/app/${input:platform}/reg_tests/build_test/api_ns/secure_fw.elf",
+      "device": "STM32U585AI",   // adapt for your MCU
+      "runToEntryPoint": "main",
+      "svdFile": "${workspaceFolder}/platform/ext/target/${input:platform}/device.svd"
+    }
+  ]
+}

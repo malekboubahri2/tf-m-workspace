@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build TF-M Regression Test",
+      "type": "shell",
+      "command": "${workspaceFolder}/workspace/scripts/build_regression.sh",
+      "args": [
+        "${input:target}",
+        "${input:buildType}",
+        "${input:toolchain}"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Flash TF-M Regression",
+      "type": "process",
+      "command": "bash",
+      "options": {
+                "env": {
+                    "PATH": "/opt/st/stm32cubeclt_1.19.0/STM32CubeProgrammer/bin:${env:PATH}"},
+        },
+      "args": [
+        "-c",
+        "cd ${workspaceFolder}/workspace/app/${input:target}/reg_tests/build_spe/api_ns && ./postbuild.sh && ./regression.sh && ./TFM_UPDATE.sh"
+      ],
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "target",
+      "description": "Select TF-M target",
+      "type": "pickString",
+      "options": [
+        "stm/b_u585i_iot02a"
+      ],
+      "default": "stm/b_u585i_iot02a"
+    },
+    {
+      "id": "buildType",
+      "description": "Select build type",
+      "type": "pickString",
+      "options": [
+        "Debug",
+        "Release"
+      ],
+      "default": "Debug"
+    },
+    {
+      "id": "toolchain",
+      "description": "Select toolchain",
+      "type": "pickString",
+      "options": [
+        "GNUARM"
+      ],
+      "default": "GNUARM"
+    }
+  ]
+}

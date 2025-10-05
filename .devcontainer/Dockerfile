@@ -1,4 +1,3 @@
-
 #Supported version by tf-m: Ubuntu 18.04 x64+
 FROM ubuntu:22.04
 
@@ -14,12 +13,18 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     cmake \
     make \
-    ninja-build   \
-    gdb \
-    libusb-1.0-0 \
+    ninja-build \
+    libusb-1.0-0-dev \
+    libhidapi-dev \
+    libjim-dev \
     libncurses5 \
     usbutils \
     unzip \
+    pkg-config \
+    autoconf \
+    automake \
+    libtool \
+	udev \
     && rm -rf /var/lib/apt/lists/*
 
 # Export CMake path

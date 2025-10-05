@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-
+#Install STM32CubeProgrammer
 cd /workdir/workspace/.devcontainer/resources
-unzip ./st-stm32cubeclt_1.19.0_25876_20250729_1159_amd64.sh.zip
+unzip -n ./st-stm32cubeclt_1.19.0_25876_20250729_1159_amd64.sh.zip
 chmod +x ./st-stm32cubeclt_1.19.0_25876_20250729_1159_amd64.sh
 export LICENSE_ALREADY_ACCEPTED=1 
 echo "" | ./st-stm32cubeclt_1.19.0_25876_20250729_1159_amd64.sh 
@@ -11,6 +11,17 @@ echo 'export PATH="$PATH:/opt/st/stm32cubeclt_1.19.0/STM32CubeProgrammer/bin"' >
 echo 'export STM32CUBE_SVD_PATH="/opt/st/stm32cubeclt_1.19.0/STMicroelectronics_CMSIS_SVD"' >> ~/.bashrc
 source ~/.bashrc
 
+#Install OpenOCD
+TMP_DIR=$(mktemp -d)
+git clone --branch v0.12.0 --recurse-submodules https://github.com/ntfreak/openocd.git "$TMP_DIR" >/dev/null 2>&1
+cd "$TMP_DIR"
+./bootstrap >/dev/null 2>&1
+./configure --enable-stlink --enable-cmsis-dap >/dev/null 2>&1
+make -j$(nproc) >/dev/null 2>&1
+make install >/dev/null 2>&1
+rm -rf "$TMP_DIR"
+
+# Create a directory for TF-M dependencies
 mkdir -p /workdir/deps
 cd /workdir/deps
 

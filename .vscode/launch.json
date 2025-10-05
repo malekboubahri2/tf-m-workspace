@@ -1,16 +1,43 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Attach TF-M Regression",
-      "type": "cmsis-debug",
-      "request": "attach",
-      "servertype": "openocd",
-      "cwd": "${workspaceFolder}",
-      "executable": "${workspaceFolder}/workspace/app/${input:platform}/reg_tests/build_test/api_ns/secure_fw.elf",
-      "device": "STM32U585AI",   // adapt for your MCU
-      "runToEntryPoint": "main",
-      "svdFile": "${workspaceFolder}/platform/ext/target/${input:platform}/device.svd"
-    }
-  ]
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug TF-M (S + NS + BL2)",
+            "type": "cortex-debug",
+            "request": "attach",
+
+            // GDB executable
+            "gdbPath": "/opt/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-gdb",
+
+            // Main ELF (secure image)
+            "executable": "/workdir/workspace/app/stm/b_u585i_iot02a/reg_tests/build_spe/bin/tfm_s.elf",
+
+            // OpenOCD server config
+            "servertype": "openocd",
+            "device": "STM32U5",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32u5x.cfg"
+            ],
+
+            // Port for GDB
+            "gdbTarget": "localhost:3333",
+            "runToEntryPoint": "main",
+
+            // Extra symbol files (bl2 + nonsecure app)
+            "symbolFiles": [
+                "/workdir/workspace/app/stm/b_u585i_iot02a/reg_tests/build_spe/bin/bl2.elf",
+                "/workdir/workspace/app/stm/b_u585i_iot02a/reg_tests/build_ns/bin/tfm_ns.elf"
+            ],
+
+            // Commands to run automatically in GDB
+            "svdFile": "${env:STM32CUBE_SVD_PATH}/STM32U585.svd",
+            "postAttachCommands": [
+                "monitor reset"
+            ],
+
+            // Working dir
+            "cwd": "/workdir/workspace/app/stm/b_u585i_iot02a"
+        }
+    ]
 }

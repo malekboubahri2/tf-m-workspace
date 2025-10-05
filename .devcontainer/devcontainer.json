@@ -11,7 +11,9 @@
     ],
     "runArgs": [
         "--privileged",
-        "--device=/dev/bus/usb:/dev/bus/usb"
+        "--device=/dev/bus/usb:/dev/bus/usb",
+        "--device=/dev/tty:/dev/tty"
+        
     ],
     "customizations": {
         "vscode": {
@@ -25,7 +27,10 @@
                 "ms-vscode.cmake-tools",
                 "ms-python.python",
                 "ms-python.vscode-pylance",
-                "Arm.vscode-cmsis-debugger"
+                "eamodio.gitlens",
+                "marus25.cortex-debug",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.vscode-serial-monitor"
             ]
         }
     },
